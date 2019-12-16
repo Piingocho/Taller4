@@ -1,7 +1,4 @@
 import { Component} from '@angular/core';
-import { prueba } from './database/database';
-
-
 //export default conexion;
 
 @Component({
@@ -25,7 +22,6 @@ private conexion:any;
   //   this.conexion.releaseConnection(con);
   //   console.log("DB conectada")
   // });
-  prueba();
   }
   
 

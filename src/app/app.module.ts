@@ -22,6 +22,11 @@ import {
   AgmCoreModule
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ProductoformComponent } from './componente/productoform/productoform.component';
+
+import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md';
+import { ModalService } from './service/modal.service';
 
 @NgModule({
   imports: [
@@ -31,7 +36,11 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     HttpModule,
     ComponentsModule,
     RouterModule,
+    HttpClientModule,
     AppRoutingModule,
+    ModalModule.forRoot(),
+    TooltipModule,
+    PopoverModule, ButtonsModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     })
@@ -40,7 +49,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     AppComponent,
     AdminLayoutComponent,
   ],
-  providers: [],
+  providers: [ModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

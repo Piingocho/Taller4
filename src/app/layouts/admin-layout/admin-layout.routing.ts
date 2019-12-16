@@ -54,13 +54,13 @@ export const AdminLayoutRoutes: Routes = [
     //         component: UpgradeComponent
     //     }]
     // }
-    { path: 'login',      component: LoginComponent  },
-    { path: 'dashboard',      component: DashboardComponent,canActivate: [LogininvGuard] },
-    { path: 'user-profile',   component: UserProfileComponent, canActivate: [LogininvGuard] },
-    { path: 'table-list',     component: TableListComponent, canActivate: [LogininvGuard] },
-    { path: 'typography',     component: TypographyComponent, canActivate: [LogininvGuard] },
-    { path: 'icons',          component: IconsComponent, canActivate: [LogininvGuard] },
-    { path: 'maps',           component: MapsComponent, canActivate: [LogininvGuard] },
-    { path: 'notifications',  component: NotificationsComponent, canActivate: [LogininvGuard] },
-    { path: 'upgrade',        component: UpgradeComponent, canActivate: [LogininvGuard] },
+    { path: 'login', component: LoginComponent },
+    { path: 'dashboard', component: DashboardComponent, canActivate: [LogininvGuard] },
+    { path: 'user-profile', component: UserProfileComponent, canActivate: [LogininvGuard] },
+    { path: 'table-list', component: TableListComponent, canActivate: [LogininvGuard] },
+    { path: 'typography', component: TypographyComponent, canActivate: [LogininvGuard] },
+    { path: 'icons', component: IconsComponent, canActivate: [LogininvGuard] },
+    { path: 'maps', component: MapsComponent, canActivate: [LogininvGuard] },
+    { path: 'notifications', component: NotificationsComponent, canActivate: [LogininvGuard] },
+    { path: 'upgrade', component: UpgradeComponent, canActivate: [LogininvGuard] },
 ];

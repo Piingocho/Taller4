@@ -21,6 +21,10 @@ import {
   MatSelectModule
 } from '@angular/material';
 import { LoginComponent } from 'app/componente/login/login.component';
+import { ModalModule, TooltipModule, PopoverModule, ButtonsModule } from 'angular-bootstrap-md';
+import { ProductoformComponent } from 'app/componente/productoform/productoform.component';
+import { ModalService } from 'app/service/modal.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -33,6 +37,7 @@ import { LoginComponent } from 'app/componente/login/login.component';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    ModalModule.forRoot(), TooltipModule, PopoverModule, ButtonsModule
   ],
   declarations: [
     DashboardComponent,
@@ -44,6 +49,11 @@ import { LoginComponent } from 'app/componente/login/login.component';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
+    ProductoformComponent,
+
+  ],
+  providers:[
+    ModalService
   ]
 })
 
