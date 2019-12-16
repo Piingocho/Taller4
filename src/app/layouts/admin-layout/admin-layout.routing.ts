@@ -8,6 +8,8 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import { LogininvGuard } from 'app/login/logininv.guard';
+import { LoginComponent } from 'app/componente/login/login.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -52,12 +54,13 @@ export const AdminLayoutRoutes: Routes = [
     //         component: UpgradeComponent
     //     }]
     // }
-    { path: 'dashboard',      component: DashboardComponent },
-    { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'table-list',     component: TableListComponent },
-    { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
+    { path: 'login',      component: LoginComponent  },
+    { path: 'dashboard',      component: DashboardComponent,canActivate: [LogininvGuard] },
+    { path: 'user-profile',   component: UserProfileComponent, canActivate: [LogininvGuard] },
+    { path: 'table-list',     component: TableListComponent, canActivate: [LogininvGuard] },
+    { path: 'typography',     component: TypographyComponent, canActivate: [LogininvGuard] },
+    { path: 'icons',          component: IconsComponent, canActivate: [LogininvGuard] },
+    { path: 'maps',           component: MapsComponent, canActivate: [LogininvGuard] },
+    { path: 'notifications',  component: NotificationsComponent, canActivate: [LogininvGuard] },
+    { path: 'upgrade',        component: UpgradeComponent, canActivate: [LogininvGuard] },
 ];

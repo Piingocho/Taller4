@@ -29,7 +29,7 @@ export class LoginserviceService {
     this.currentUserSub.next(null);
   }
 
-  public getUser(){
+  public get getUser(){
     return this.currentUserSub.value;
   }
 
@@ -37,6 +37,6 @@ export class LoginserviceService {
 }
 
 export interface Login{
-  username: string;
+  email: string;
   password: string;
 }

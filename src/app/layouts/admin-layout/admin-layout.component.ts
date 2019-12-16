@@ -6,6 +6,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
+import { Login, LoginserviceService } from 'app/service/loginservice.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -17,9 +18,21 @@ export class AdminLayoutComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
 
-  constructor( public location: Location, private router: Router) {}
-
+  constructor( public location: Location, private router: Router, private loginService: LoginserviceService) {}
+  private currentUser:Login;
   ngOnInit() {
+      this.loginService.currentUser.subscribe(
+          res=>{
+            if(res){
+                this.currentUser=res;
+            }
+          },
+          err=>{
+            
+          }
+      );
+      
+
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {

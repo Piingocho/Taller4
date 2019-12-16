@@ -1,5 +1,6 @@
 import { Component} from '@angular/core';
-// import { createPool } from 'promise-mysql';
+import { prueba } from './database/database';
+
 
 //export default conexion;
 
@@ -24,5 +25,8 @@ private conexion:any;
   //   this.conexion.releaseConnection(con);
   //   console.log("DB conectada")
   // });
+  prueba();
   }
+  
+
 }

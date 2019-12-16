@@ -10,7 +10,6 @@ const routes: Routes =[
   {
     path: '',
     redirectTo: 'dashboard',
-    canActivate: [LogininvGuard],
     pathMatch: 'full',
   }, {
     path: '',

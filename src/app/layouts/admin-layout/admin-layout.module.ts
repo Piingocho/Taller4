@@ -20,6 +20,7 @@ import {
   MatTooltipModule,
   MatSelectModule
 } from '@angular/material';
+import { LoginComponent } from 'app/componente/login/login.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -37,6 +38,7 @@ import {
     DashboardComponent,
     UserProfileComponent,
     TableListComponent,
+    LoginComponent,
     TypographyComponent,
     IconsComponent,
     MapsComponent,
