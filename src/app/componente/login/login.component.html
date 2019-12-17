@@ -1,12 +1,12 @@
 <div class="login-page">
   <div class="form">
-    <!-- <form class="register-form">
-      <input type="text" formControlName="email" placeholder="name"/>
+    <form class="register-form">
+      <!-- <input type="text" formControlName="email" placeholder="name"/>
       <input type="password" placeholder="password"/>
       <input type="text" placeholder="email address"/>
-      <button>create</button>
+      <button>create</button> -->
       <p class="message">Already registered? <a href="#">Sign In</a></p>
-    </form> -->
+    </form>
     <form class="login-form" [formGroup]="ngFormLogin" (ngSubmit)="onLogin()">
       <input type="text" formControlName="email" placeholder="username"/>
       <input type="password" formControlName="password" placeholder="password"/>

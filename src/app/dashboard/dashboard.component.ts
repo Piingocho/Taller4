@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as Chartist from 'chartist';
 import { LoginserviceService } from 'app/service/loginservice.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { ModalService } from 'app/service/modal.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(private loginService: LoginserviceService, private router: Router, private modalService: ModalService) { }
   startAnimationForLineChart(chart) {
@@ -88,8 +88,13 @@ export class DashboardComponent implements OnInit {
   private modalFormP;
   validatingForm: FormGroup;
   private showForm:boolean=false;
+
+
+  closeModal(idform:string){
+    this.modalService.close(idform);
+  }
+
   agregarProducto() {
-    this.showForm=true;
     this.modalService.open("formProducto");
     // this.loginService.addInventario({ idproducto: '53432', nombre: "algo", costo: "23" })
     //   .subscribe(
@@ -106,7 +111,7 @@ export class DashboardComponent implements OnInit {
   updateInventario() {
     this.loginService.getInventario().subscribe(
       res => {
-        console.log(res);
+        // console.log(res);
         this.inventario = res;
       }, err => {
         console.log(err);
@@ -121,6 +126,12 @@ export class DashboardComponent implements OnInit {
     return this.validatingForm.get('loginFormModalPassword');
   }
 
+  private updateTimer:any;
+
+  ngOnDestroy(){
+    clearInterval(this.updateTimer);
+  }
+
   ngOnInit() {
     this.updateInventario();
     this.validatingForm = new FormGroup({
@@ -128,85 +139,23 @@ export class DashboardComponent implements OnInit {
       loginFormModalPassword: new FormControl('', Validators.required)
     });
 
-    /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
-    const dataDailySalesChart: any = {
-      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-      series: [
-        [12, 17, 7, 17, 23, 18, 38]
-      ]
-    };
-
-    const optionsDailySalesChart: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-    }
-
-    var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-    this.startAnimationForLineChart(dailySalesChart);
-
-
-    /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-    const dataCompletedTasksChart: any = {
-      labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-      series: [
-        [230, 750, 450, 300, 280, 240, 200, 190]
-      ]
-    };
-
-    const optionsCompletedTasksChart: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0
-      }),
-      low: 0,
-      high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 }
-    }
-
-    var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
-
-    // start animation for the Completed Tasks Chart - Line Chart
-    this.startAnimationForLineChart(completedTasksChart);
-
-
-
-    /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
-    var datawebsiteViewsChart = {
-      labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-      series: [
-        [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
-
-      ]
-    };
-    var optionswebsiteViewsChart = {
-      axisX: {
-        showGrid: false
-      },
-      low: 0,
-      high: 1000,
-      chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
-    };
-    var responsiveOptions: any[] = [
-      ['screen and (max-width: 640px)', {
-        seriesBarDistance: 5,
-        axisX: {
-          labelInterpolationFnc: function (value) {
-            return value[0];
-          }
+    this.modalService.currentModal.subscribe(
+      res=>{
+        if(!res){
+          this.updateInventario();
         }
-      }]
-    ];
-    var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+        console.log("UPDATE",res);
+      },
+      err=>{
+        console.log("UPDATE2");
+      }
+    )
 
-    //start animation for the Emails Subscription Chart
-    this.startAnimationForBarChart(websiteViewsChart);
+    this.updateTimer=setInterval(()=>{
+      this.updateInventario();
+    },5000);
+
+   
   }
 
 }

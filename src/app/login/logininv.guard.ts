@@ -6,12 +6,11 @@ import { LoginserviceService } from 'app/service/loginservice.service';
 @Injectable({
   providedIn: 'root'
 })
-export class LogininvGuard implements CanActivate  {
+export class LogininvGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const currentUser = this.loginService.getUser;
-    console.log("DDD", currentUser)
-
-    if(currentUser){
+    // console.log("DDD", currentUser)
+    if (currentUser) {
       return true;
     }
     this.router.navigate(['/login']);
@@ -19,8 +18,5 @@ export class LogininvGuard implements CanActivate  {
     // throw new Error("Method not implemented.");
   }
 
-  constructor(private loginService: LoginserviceService, private router:Router){
-
-
-  }
+  constructor(private loginService: LoginserviceService, private router: Router) { }
 }

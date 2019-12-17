@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
 import { Login, LoginserviceService } from 'app/service/loginservice.service';
+import { isNull } from 'util';
 
 @Component({
     selector: 'app-admin-layout',
@@ -26,14 +27,49 @@ export class AdminLayoutComponent implements OnInit {
             res => {
                 if (res) {
                     this.currentUser = res;
+                    this.previewLoad();
+                } else if (isNull(res)) {
+                    this.currentUser = null;
+                    this.router.navigate(['/login']);
                 }
             },
             err => {
-                this.currentUser = null;
+
             }
         );
 
 
+
+    }
+    ngAfterViewInit() {
+        this.runOnRouteChange();
+    }
+    isMaps(path) {
+        var titlee = this.location.prepareExternalUrl(this.location.path());
+        titlee = titlee.slice(1);
+        if (path == titlee) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    runOnRouteChange(): void {
+        if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
+            const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
+            const ps = new PerfectScrollbar(elemMainPanel);
+            ps.update();
+        }
+    }
+    isMac(): boolean {
+        let bool = false;
+        if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
+            bool = true;
+        }
+        return bool;
+    }
+
+    previewLoad() {
         const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
         if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
@@ -66,8 +102,8 @@ export class AdminLayoutComponent implements OnInit {
             elemSidebar.scrollTop = 0;
         });
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-            let ps = new PerfectScrollbar(elemMainPanel);
-            ps = new PerfectScrollbar(elemSidebar);
+            // let ps = new PerfectScrollbar(elemMainPanel);
+            // ps = new PerfectScrollbar(elemSidebar);
         }
 
         const window_width = $(window).width();
@@ -141,33 +177,6 @@ export class AdminLayoutComponent implements OnInit {
                 $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
             }
         });
-    }
-    ngAfterViewInit() {
-        this.runOnRouteChange();
-    }
-    isMaps(path) {
-        var titlee = this.location.prepareExternalUrl(this.location.path());
-        titlee = titlee.slice(1);
-        if (path == titlee) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-    runOnRouteChange(): void {
-        if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-            const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
-            const ps = new PerfectScrollbar(elemMainPanel);
-            ps.update();
-        }
-    }
-    isMac(): boolean {
-        let bool = false;
-        if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
-            bool = true;
-        }
-        return bool;
     }
 
 }

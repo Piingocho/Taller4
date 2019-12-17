@@ -42,13 +42,13 @@ export class LoginserviceService {
     return this.http.post<any>(`${this.SERVER_URL}/inventario`, producto);
   }
 
-  public deleteProducto(idproducto:string | number){
+  public deleteProducto(idproducto: string | number) {
     return this.http.delete<any>(`${this.SERVER_URL}/inventario/${idproducto}`);
   }
 
   public logout() {
-    localStorage.removeItem("user");
     this.currentUserSub.next(null);
+    localStorage.removeItem("user");
   }
 
   public get getUser() {
