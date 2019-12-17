@@ -10,7 +10,8 @@ import { map } from "rxjs/operators";
 
 export class LoginserviceService {
 
-  private SERVER_URL: string = "http://localhost/venado";
+  private host:string = window.location.hostname;
+  private SERVER_URL: string = `http://${this.host}/venadoAPI`;
 
   
   constructor(private http: HttpClient) {
