@@ -41,7 +41,9 @@ import { ModalService } from './service/modal.service';
     ModalModule.forRoot(),
     TooltipModule,
     PopoverModule, ButtonsModule,
-   
+    AgmCoreModule.forRoot({
+      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+    })
   ],
   declarations: [
     AppComponent,
