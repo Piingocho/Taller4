@@ -10,6 +10,9 @@ import { map } from "rxjs/operators";
 
 export class LoginserviceService {
 
+  private SERVER_URL: string = "http://localhost/venado";
+
+  
   constructor(private http: HttpClient) {
     this.currentUserSub = new BehaviorSubject<Login>(JSON.parse(localStorage.getItem("user")));
     this.currentUser = this.currentUserSub.asObservable();
@@ -19,9 +22,8 @@ export class LoginserviceService {
   private currentUserSub: BehaviorSubject<Login>;
   public currentUser: Observable<Login>;
 
-  private SERVER_URL: string = "http://localhost:3500";
   public login(user: Login) {
-    return this.http.post<any>(`${this.SERVER_URL}/login`, user).pipe(
+    return this.http.post<any>(`${this.SERVER_URL}/login.php`, user).pipe(
       map(user => {
         if (user.error) {
           const mensaje = user.error.mensaje;
@@ -35,15 +37,15 @@ export class LoginserviceService {
   }
 
   public getInventario() {
-    return this.http.get<any>(`${this.SERVER_URL}/inventario`);
+    return this.http.get<any>(`${this.SERVER_URL}/inventario.php`);
   }
 
   public addInventario(producto: any) {
-    return this.http.post<any>(`${this.SERVER_URL}/inventario`, producto);
+    return this.http.post<any>(`${this.SERVER_URL}/inventario.php`, producto);
   }
 
   public deleteProducto(idproducto: string | number) {
-    return this.http.delete<any>(`${this.SERVER_URL}/inventario/${idproducto}`);
+    return this.http.delete<any>(`${this.SERVER_URL}/inventario.php/${idproducto}`);
   }
 
   public logout() {

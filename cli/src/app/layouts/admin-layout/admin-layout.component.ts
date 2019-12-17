@@ -20,7 +20,7 @@ export class AdminLayoutComponent implements OnInit {
     private yScrollStack: number[] = [];
 
     constructor(public location: Location, private router: Router, private loginService: LoginserviceService) { }
-    private currentUser: Login = null;
+    public currentUser: Login = null;
     ngOnInit() {
 
         this.loginService.currentUser.subscribe(
@@ -42,7 +42,7 @@ export class AdminLayoutComponent implements OnInit {
 
     }
     ngAfterViewInit() {
-        this.runOnRouteChange();
+        //this.runOnRouteChange();
     }
     isMaps(path) {
         var titlee = this.location.prepareExternalUrl(this.location.path());
@@ -98,8 +98,8 @@ export class AdminLayoutComponent implements OnInit {
             }
         });
         this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-            elemMainPanel.scrollTop = 0;
-            elemSidebar.scrollTop = 0;
+            // elemMainPanel.scrollTop = 0;
+            // elemSidebar.scrollTop = 0;
         });
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             // let ps = new PerfectScrollbar(elemMainPanel);

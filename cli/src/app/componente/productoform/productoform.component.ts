@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { ModalService } from 'app/service/modal.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginserviceService } from 'app/service/loginservice.service';
+import { isNull, isNumber } from 'util';
 
 
 // declare global {
@@ -11,7 +12,7 @@ import { LoginserviceService } from 'app/service/loginservice.service';
 //   }
 // }
 
-
+declare var $: any;
 @Component({
   selector: 'app-productoform',
   templateUrl: './productoform.component.html',
@@ -84,20 +85,34 @@ export class ProductoformComponent implements OnInit {
     const nombre = this.formValue.nombre.value;
     const idproducto = this.formValue.idproducto.value;
     const costo = this.formValue.costo.value;
+    if (isNull(nombre) || nombre === "") {
+      this.showNotification("Ingrese el nombre del producto", 'danger');
+    }
+    if (isNull(idproducto) || idproducto === "") {
+      this.showNotification("Ingrese un ID para el producto", 'danger');
+    }
+    if (isNull(costo) || costo === "" || !isNumber(Number(costo))) {
+      this.showNotification("Ingrese un costo para el producto", 'danger');
+    }
+    if (isNull(nombre) || nombre === "" || isNull(idproducto) || idproducto === "" || isNull(costo) || costo === "" || !isNumber(Number(costo))) {
+      return null;
+    }
+
     const producto = {
       nombre,
       idproducto,
       costo
     };
-    console.log(this.formValue);
+    console.log(this.formValue, producto);
     this.loginService.addInventario(producto)
       .subscribe(
         res => {
           console.log(res);
           this.modalService.close(this.id);
+          this.showNotification(res.mensaje,'info');
           this.ngFormProducto.setValue({
-            nombre:'',
-            idproducto:'',
+            nombre: '',
+            idproducto: '',
             costo: ''
           })
         },
@@ -105,5 +120,34 @@ export class ProductoformComponent implements OnInit {
           console.log("err", err);
         }
       )
+  }
+
+  showNotification(message: string, color: string = "success", from: string = "top", align: string = "center") {
+    // const type = ['', 'info', 'success', 'warning', 'danger'];
+
+    // const color = Math.floor((Math.random() * 4) + 1);
+
+    $.notify({
+      icon: "notifications",
+      message: message
+
+    }, {
+      type: color,//type[color],
+      timer: 1000,
+      placement: {
+        from: from,
+        align: align
+      },
+      template: '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
+        '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons" data-notify="icon">notifications</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>' +
+        '<div class="progress" data-notify="progressbar">' +
+        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+        '</div>' +
+        '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
+    });
   }
 }

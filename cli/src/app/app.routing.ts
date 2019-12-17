@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
-import { BrowserModule  } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { LogininvGuard } from './login/logininv.guard';
 
-const routes: Routes =[
+const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
@@ -18,15 +18,16 @@ const routes: Routes =[
       path: '',
       loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
     }]
-  }
+  },
+  { path: '**', redirectTo: 'dashboard' }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes,{
-       useHash: true
+    RouterModule.forRoot(routes, {
+      useHash: true
     })
   ],
   exports: [
